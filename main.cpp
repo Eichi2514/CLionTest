@@ -1,32 +1,32 @@
-#include <string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
-string solution(string s) {
-    int idx = 0;
-    for (int i = 0; i < s.size(); i++) {
-        if (s[i] == ' ') {
-            idx = 0;
-            continue;
-        }
-        if (idx % 2) {
-            s[i] = tolower(s[i]);
+int solution(vector<int> d, int budget) {
+    int answer = 0;
+
+    sort(d.begin(), d.end());
+
+    for (int i = 0; i < d.size(); i++) {
+        if (budget >= d[i]) {
+            budget -= d[i];
+            answer++;
         } else {
-            s[i] = toupper(s[i]);
+            break;
         }
-        idx++;
     }
-    return s;
+
+    return answer;
 }
 
-#include <iostream>
-
 int main() {
-    string test1 = "try hello world";
-    string test2 = "this is a test";
+    vector<int> test1 = {1, 3, 2, 5, 4};
+    vector<int> test2 = {2, 2, 3, 3};
 
-    cout << "Test 1 : " << solution(test1) << endl;
-    cout << "Test 2 : " << solution(test2) << endl;
+    cout << "Test 1 : " << solution(test1, 9) << endl;
+    cout << "Test 2 : " << solution(test2, 10) << endl;
 
     return 0;
 }
