@@ -1,32 +1,32 @@
-#include <iostream>
+#include <string>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
-int solution(vector<int> d, int budget) {
+int solution(vector<int> number) {
     int answer = 0;
-
-    sort(d.begin(), d.end());
-
-    for (int i = 0; i < d.size(); i++) {
-        if (budget >= d[i]) {
-            budget -= d[i];
-            answer++;
-        } else {
-            break;
+    for (int i = 0; i < number.size(); i++) {
+        for (int j = i + 1; j < number.size(); j++) {
+            for (int k = j + 1; k < number.size(); k++) {
+                if (number[i] + number[j] + number[k] == 0) {
+                    answer++;
+                }
+            }
         }
     }
-
     return answer;
 }
 
+#include <iostream>
+
 int main() {
-    vector<int> test1 = {1, 3, 2, 5, 4};
+    // string test1 = "try hello world";
+    // string test2 = "this is a test";
+    vector<int> test1 = {-3, -2, -1, 0, 1, 2, 3};
     vector<int> test2 = {2, 2, 3, 3};
 
-    cout << "Test 1 : " << solution(test1, 9) << endl;
-    cout << "Test 2 : " << solution(test2, 10) << endl;
+    cout << "Test 1 : " << solution(test1) << endl;
+    cout << "Test 2 : " << solution(test2) << endl;
 
     return 0;
 }
