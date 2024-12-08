@@ -1,23 +1,25 @@
-#include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
-string solution(string s, int n) {
-    string result = "";
-
-    for (char c: s) {
-        if (c >= 'a' && c <= 'z') {
-            if (c + n <= 'z') result += c + n;
-            else result += c + n - 26;
-        } else if (c >= 'A' && c <= 'Z') {
-            if (c + n <= 'Z') result += c + n;
-            else result += c + n - 26;
-        } else result += c;
+vector<int> solution(string s) {
+    vector<int> answer = vector<int>(s.length());
+    answer[0] = -1;
+    for (int i = 1; i < s.length(); i++) {
+        for (int j = 0; j < i; j++) {
+            if (s[i] == s[j]) {
+                answer[i] = i-j;
+            }
+        }
+        if (answer[i] == 0) {
+            answer[i] = -1;
+        }
     }
-
-    return result;
+    return answer;
 }
+
+#include <iostream>
 
 int main() {
     // string test1 = "try hello world";
@@ -27,8 +29,9 @@ int main() {
     // vector<vector<int> > test1 = {{60, 50}, {30, 70}, {60, 30}, {80, 40}};
     // vector<vector<int> > test2 = {{10, 7}, {12, 3}, {8, 15}, {14, 7}, {5, 15}};
 
-    cout << "Test 1 : " << solution("ZZZZ", 1) << endl;
-    cout << "Test 2 : " << solution("WFUHZXajksndriyoeaFSUIZ", 1) << endl;
+
+    cout << "Test 1 : " << solution("banana") << endl;
+    cout << "Test 2 : " << solution("foobar") << endl;
 
     return 0;
 }
