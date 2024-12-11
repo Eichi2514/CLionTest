@@ -1,30 +1,17 @@
-#include <string>
 #include <vector>
 #include <algorithm>
-#include <iostream>
 
 using namespace std;
 
-vector<string> solution(vector<string> strings, int n) {
-    vector<string> answer;
+vector<int> solution(vector<int> array, vector<vector<int>> commands) {
+    vector<int> answer(commands.size());
 
-    sort(strings.begin(), strings.end());
+    for (int i = 0; i < commands.size(); i++) {
+        vector<int> temps(array.begin() + commands[i][0] - 1, array.begin() + commands[i][1]);
 
-    vector<char> temps;
-    for (int i = 0; i < strings.size(); i++) {
-        temps.push_back(strings[i][n]);
-    }
+        sort(temps.begin(), temps.end());
 
-    sort(temps.begin(), temps.end());
-
-    for (int i = 0; i < temps.size(); i++) {
-        for (int j = 0; j < strings.size(); j++) {
-            if (temps[i] == strings[j][n]) {
-                answer.push_back(strings[j]);
-                strings[j] = "0000000000";
-                break;
-            }
-        }
+        answer[i] = temps[commands[i][2] - 1];
     }
 
     return answer;
@@ -35,34 +22,34 @@ vector<string> solution(vector<string> strings, int n) {
 int main() {
     // string test1 = "try hello world";
     // string test2 = "this is a test";
-    // vector<int> test1 = {1, 3, 4, 6};
+    vector<int> test1 = {1, 5, 2, 6, 3, 7, 4};
     // vector<int> test2 = {1, 7, 1, 2};
-    vector<string> test1 = {"sun", "bed", "car"};
-    vector<string> test2 = {"abce", "abcd", "cdx"};
-    // vector<vector<int> > test1 = {{60, 50}, {30, 70}, {60, 30}, {80, 40}};
-    // vector<vector<int> > test2 = {{10, 7}, {12, 3}, {8, 15}, {14, 7}, {5, 15}};
+    // vector<string> test1 = {"sun", "bed", "car"};
+    // vector<string> test2 = {"abce", "abcd", "cdx"};
+    vector<vector<int> > test3 = {{2, 5, 3}, {4, 4, 1}, {1, 7, 3}};
+    // vector<vector<int> > test4 = {{10, 7}, {12, 3}, {8, 15}, {14, 7}, {5, 15}};
 
-    solution(test1,1);
-    solution(test2,2);
+    // solution(test1,1);
+    // solution(test2,2);
 
     // cout << "test1 : " << solution(test1) << endl;
     // cout << "test2 : " << solution(test2) << endl;
 
-    vector<string> result1 = solution(test1, 1);
+    vector<int> result1 = solution(test1, test3);
     cout << "Test 1 : [";
-    for (string strings : result1) { // Range-based for loop
-        cout << strings << ", ";
+    for (int temps : result1) { // Range-based for loop
+        cout << temps << ", ";
     }
     cout << "]" << endl;
     cout << endl;
 
-    vector<string> result2 = solution(test2 , 2);
+    /*vector<int> result2 = solution(test2 , test4);
     cout << "Test 2 : [";
-    for (string strings : result2) { // Range-based for loop
-        cout << strings << " ,";
+    for (int temps : result2) { // Range-based for loop
+        cout << temps << " ,";
     }
     cout << "]" << endl;
-    cout << endl;
+    cout << endl;*/
 
     return 0;
 }
