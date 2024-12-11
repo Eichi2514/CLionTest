@@ -1,22 +1,19 @@
 #include <string>
 #include <vector>
-#include <bitset>
 
 using namespace std;
 
-vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
-    vector<string> answer;
-    for (int i = 0; i < n; i++) {
-        string temp1 = bitset<32>(arr1[i]).to_string().substr(32 - n);
-        string temp2 = bitset<32>(arr2[i]).to_string().substr(32 - n);
-        string temp3 = "";
-        for (int j = 0; j < n; j++) {
-            if (temp1[j] == '1' || temp2[j] == '1') temp3 += '#';
-            else temp3 += ' ';
+vector<int> solution(vector<string> name, vector<int> yearning, vector<vector<string>> photo) {
+    vector<int> answer;
+    for (int i = 0; i < photo.size(); i++) {
+        int score = 0;
+        for (int j = 0; j < photo[i].size(); j++) {
+            for (int k = 0; k < name.size(); k++) {
+                if (name[k] == photo[i][j]) score += yearning[k];
+            }
         }
-        answer.push_back(temp3);
+        answer.push_back(score);
     }
-
     return answer;
 }
 
@@ -25,8 +22,8 @@ vector<string> solution(int n, vector<int> arr1, vector<int> arr2) {
 int main() {
     // string test1 = "try hello world";
     // string test2 = "this is a test";
-    vector<int> test1 = {9, 20, 28, 18, 11};
-    vector<int> test2 = {30, 1, 21, 17, 28};
+    // vector<int> test1 = {9, 20, 28, 18, 11};
+    // vector<int> test2 = {30, 1, 21, 17, 28};
     // vector<string> test1 = {"sun", "bed", "car"};
     // vector<string> test2 = {"abce", "abcd", "cdx"};
     // vector<vector<int> > test3 = {{2, 5, 3}, {4, 4, 1}, {1, 7, 3}};
@@ -38,13 +35,13 @@ int main() {
     // cout << "test1 : " << solution(2, 1 ,20) << endl;
     // cout << "test2 : " << solution(3, 1 ,20) << endl;
 
-    vector<string> result1 = solution(5, test1, test2);
-    cout << "Test 1 : [";
-    for (string temps : result1) { // Range-based for loop
-        cout << temps << ", ";
-    }
-    cout << "]" << endl;
-    cout << endl;
+    // vector<string> result1 = solution(5, test1, test2);
+    // cout << "Test 1 : [";
+    // for (string temps : result1) { // Range-based for loop
+    //     cout << temps << ", ";
+    // }
+    // cout << "]" << endl;
+    // cout << endl;
 
     // vector<int> result2 = solution(4, test2);
     // cout << "Test 2 : [";
