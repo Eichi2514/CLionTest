@@ -1,25 +1,21 @@
-#include <algorithm>
-#include <vector>
+#include <string>
 
 using namespace std;
 
-int solution(vector<int> nums){
-    int answer = 1;
-
-    sort(nums.begin(), nums.end());
-
-    for(int i = 0; i < nums.size()-1; i++) {
-        if(nums[i] != nums[i+1]) {
-            answer++;
-        }
+string solution(int a, int b) {
+    int year = 2016;
+    if (a < 3) {
+        year -= 1;
+        a += 12;
     }
+    int k = year % 100;
+    int j = year / 100;
+    int h = (b + (13 * (a + 1)) / 5 + k + k / 4 + j / 4 - 2 * j) % 7;
 
-    if (answer * 2 > nums.size()) {
-        answer = nums.size() / 2;
-    }
-
-    return answer;
+    string days[] = {"SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"};
+    return days[(h + 7) % 7];
 }
+
 
 #include <iostream>
 
