@@ -1,26 +1,21 @@
-#include <string>
+#include <algorithm>
 #include <vector>
 
 using namespace std;
 
-string solution(vector<string> cards1, vector<string> cards2, vector<string> goal) {
-    string answer = "Yes";
-    int index1 = 0;
-    int index2 = 0;
-    int index3 = 0;
+int solution(vector<int> nums){
+    int answer = 1;
 
-    while (answer == "Yes" && index3 < goal.size()) {
-        if (cards1[index1] == goal[index3]) {
-            index1++;
-            index3++;
-            continue;
+    sort(nums.begin(), nums.end());
+
+    for(int i = 0; i < nums.size()-1; i++) {
+        if(nums[i] != nums[i+1]) {
+            answer++;
         }
-        if (cards2[index2] == goal[index3]) {
-            index2++;
-            index3++;
-            continue;
-        }
-        answer = "No";
+    }
+
+    if (answer * 2 > nums.size()) {
+        answer = nums.size() / 2;
     }
 
     return answer;
