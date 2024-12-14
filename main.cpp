@@ -1,20 +1,29 @@
 #include <string>
+#include <cmath>
 
 using namespace std;
 
-string solution(int a, int b) {
-    int year = 2016;
-    if (a < 3) {
-        year -= 1;
-        a += 12;
-    }
-    int k = year % 100;
-    int j = year / 100;
-    int h = (b + (13 * (a + 1)) / 5 + k + k / 4 + j / 4 - 2 * j) % 7;
+int solution(int number, int limit, int power) {
+    int answer = 0;
 
-    string days[] = {"SAT", "SUN", "MON", "TUE", "WED", "THU", "FRI"};
-    return days[(h + 7) % 7];
+    for (int i = 1; i <= number; i++) {
+        int divisorCount = 0;
+        for (int j = 1; j <= sqrt(i); j++) {
+            if (i % j == 0) {
+                divisorCount++;
+                if (j != i / j) {
+                    divisorCount++;
+                }
+            }
+        }
+        if (divisorCount > limit) {
+            answer += power;
+        } else answer += divisorCount;
+    }
+
+    return answer;
 }
+
 
 
 #include <iostream>
