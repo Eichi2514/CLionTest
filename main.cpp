@@ -3,17 +3,26 @@
 
 using namespace std;
 
-vector<int> solution(vector<string> name, vector<int> yearning, vector<vector<string>> photo) {
-    vector<int> answer;
-    for (int i = 0; i < photo.size(); i++) {
-        int score = 0;
-        for (int j = 0; j < photo[i].size(); j++) {
-            for (int k = 0; k < name.size(); k++) {
-                if (name[k] == photo[i][j]) score += yearning[k];
-            }
+string solution(vector<string> cards1, vector<string> cards2, vector<string> goal) {
+    string answer = "Yes";
+    int index1 = 0;
+    int index2 = 0;
+    int index3 = 0;
+
+    while (answer == "Yes" && index3 < goal.size()) {
+        if (cards1[index1] == goal[index3]) {
+            index1++;
+            index3++;
+            continue;
         }
-        answer.push_back(score);
+        if (cards2[index2] == goal[index3]) {
+            index2++;
+            index3++;
+            continue;
+        }
+        answer = "No";
     }
+
     return answer;
 }
 
