@@ -1,29 +1,71 @@
 #include <string>
-#include <cmath>
+#include <vector>
 
 using namespace std;
 
-int solution(int number, int limit, int power) {
-    int answer = 0;
+vector<int> solution(vector<int> answers) {
+    vector<int> answer;
+    vector<int> tester1 = {1, 2, 3, 4, 5};
+    int testNo1 = 0;
+    vector<int> tester2 = {2, 1, 2, 3, 2, 4, 2, 5};
+    int testNo2 = 0;
+    vector<int> tester3 = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+    int testNo3 = 0;
 
-    for (int i = 1; i <= number; i++) {
-        int divisorCount = 0;
-        for (int j = 1; j <= sqrt(i); j++) {
-            if (i % j == 0) {
-                divisorCount++;
-                if (j != i / j) {
-                    divisorCount++;
-                }
+    for (int i = 0; i < answers.size(); i++) {
+        if (i >= tester1.size()) {
+            if (answers[i] == tester1[i % 5]) {
+                testNo1++;
+            }
+        } else {
+            if (answers[i] == tester1[i]) {
+                testNo1++;
             }
         }
-        if (divisorCount > limit) {
-            answer += power;
-        } else answer += divisorCount;
+
+        if (i >= tester2.size()) {
+            if (answers[i] == tester2[i % 8]) {
+                testNo2++;
+            }
+        } else {
+            if (answers[i] == tester2[i]) {
+                testNo2++;
+            }
+        }
+
+        if (i >= tester3.size()) {
+            if (answers[i] == tester3[i % 10]) {
+                testNo3++;
+            }
+        } else {
+            if (answers[i] == tester3[i]) {
+                testNo3++;
+            }
+        }
+    }
+
+    if (testNo1 == testNo2 && testNo1 == testNo3) {
+        answer = {1, 2, 3};
+    } else if (testNo1 == testNo2) {
+        if (testNo3 > testNo1) {
+            answer = {3};
+        } else answer = {1, 2};
+    } else if (testNo2 == testNo3) {
+        if (testNo1 > testNo2) {
+            answer = {1};
+        } else answer = {2, 3};
+    } else if (testNo1 == testNo3) {
+        if (testNo2 > testNo1) {
+            answer = {2};
+        } else answer = {1, 3};
+    } else {
+        if (testNo1 > testNo2 && testNo1 > testNo3) answer = {1};
+        else if (testNo2 > testNo1 && testNo2 > testNo3) answer = {2};
+        else answer = {3};
     }
 
     return answer;
 }
-
 
 
 #include <iostream>
