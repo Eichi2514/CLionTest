@@ -1,49 +1,36 @@
 #include <vector>
 #include <iostream>
-#include <cmath>
+
 using namespace std;
 
-bool isPrime(int num) {
-    if (num < 2) return false;
-    for (int i = 2; i <= sqrt(num); i++) {
-        if (num % i == 0) return false;
-    }
-    return true;
-}
+int solution(int n, int m, vector<int> section) {
+    int answer = 1;
+    int num = section[0];;
 
-int solution(vector<int> nums) {
-    int answer = 0;
-
-    for (int i = 0; i < nums.size(); i++) {
-        for (int j = i + 1; j < nums.size(); j++) {
-            for (int k = j + 1; k < nums.size(); k++) {
-                int sum = nums[i] + nums[j] + nums[k];
-                if (isPrime(sum)) {
-                    answer++;
-                }
-            }
+    for (int i = 0; i < section.size(); i++) {
+        if (num + m - 1 < section[i]) {
+            answer++;
+            num = section[i];
         }
     }
+
+    cout << "test1 : " << answer << endl;
 
     return answer;
 }
 
-
-
-#include <iostream>
-
 int main() {
     // string test1 = "try hello world";
     // string test2 = "this is a test";
-    // vector<int> test1 = {9, 20, 28, 18, 11};
-    // vector<int> test2 = {30, 1, 21, 17, 28};
+    vector<int> test1 = {2, 3, 6};
+    vector<int> test2 = {1, 3};
     // vector<string> test1 = {"sun", "bed", "car"};
     // vector<string> test2 = {"abce", "abcd", "cdx"};
     // vector<vector<int> > test3 = {{2, 5, 3}, {4, 4, 1}, {1, 7, 3}};
     // vector<vector<int> > test4 = {{10, 7}, {12, 3}, {8, 15}, {14, 7}, {5, 15}};
 
-    // solution(test1,1);
-    // solution(test2,2);
+    solution(8,4,test1);
+    solution(5,4,test2);
 
     // cout << "test1 : " << solution(2, 1 ,20) << endl;
     // cout << "test2 : " << solution(3, 1 ,20) << endl;
