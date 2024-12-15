@@ -1,19 +1,33 @@
-#include <algorithm>
 #include <vector>
-
+#include <iostream>
+#include <cmath>
 using namespace std;
 
-int solution(int k, int m, vector<int> score) {
+bool isPrime(int num) {
+    if (num < 2) return false;
+    for (int i = 2; i <= sqrt(num); i++) {
+        if (num % i == 0) return false;
+    }
+    return true;
+}
+
+int solution(vector<int> nums) {
     int answer = 0;
 
-    sort(score.begin(), score.end());
-
-    for (int i = 1; i <= score.size()/m; i++) {
-        answer += score[score.size()-(m*i)]*m;
+    for (int i = 0; i < nums.size(); i++) {
+        for (int j = i + 1; j < nums.size(); j++) {
+            for (int k = j + 1; k < nums.size(); k++) {
+                int sum = nums[i] + nums[j] + nums[k];
+                if (isPrime(sum)) {
+                    answer++;
+                }
+            }
+        }
     }
 
     return answer;
 }
+
 
 
 #include <iostream>
