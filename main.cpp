@@ -1,34 +1,42 @@
-#include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-int solution(vector<string> babbling) {
-    int answer = 0;
-    vector<string> answers = {"aya", "ye", "woo", "ma"};
+vector<int> solution(int N, vector<int> stages) {
+    vector<int> answer;
 
-    for (int i = 0; i < babbling.size(); i++) {
-        string a = "";
+     vector<int> stageCount(N + 1, 0);
 
-        while (!babbling[i].empty()) {
-            bool b = false;
-            for (int j = 0; j < answers.size(); j++) {
-                if (babbling[i].find(answers[j]) == 0 && answers[j] != a) {
-                    babbling[i].erase(0, answers[j].size());
-                    a = answers[j];
-                    b = true;
-                    break;
-                }
-            }
-
-            if (!b) {
-                break;
-            }
+     for (int i = 0; i < stages.size(); i++) {
+        if (stages[i] <= N) {
+            stageCount[stages[i]]++;
         }
+    }
 
-        if (babbling[i].empty()) {
-            answer++;
+    vector<pair<int, double>> failureRates;
+    int totalPlayers = stages.size();
+
+     for (int i = 1; i <= N; i++) {
+        if (totalPlayers == 0) {
+            failureRates.push_back({i, 0.0});
+        } else {
+            double failureRate = (double)stageCount[i] / totalPlayers;
+            failureRates.push_back({i, failureRate});
+            totalPlayers -= stageCount[i];
         }
+    }
+
+     sort(failureRates.begin(), failureRates.end(),
+        [](pair<int, double> a, pair<int, double> b) {
+            if (a.second == b.second) {
+                return a.first < b.first;
+            }
+            return a.second > b.second;
+        });
+
+     for (int i = 0; i < failureRates.size(); i++) {
+        answer.push_back(failureRates[i].first);
     }
 
     return answer;
@@ -41,16 +49,16 @@ int main() {
     // string test2 = "this is a test";
     // vector<int> test1 = {2, 3, 6};
     // vector<int> test2 = {1, 3};
-    vector<string> test1 = {"aya", "yee", "yeye", "woowoo", "ma"};
-    vector<string> test2 = {"ayayeayayeaya", "mayewoo", "yemawoo"};
+    // vector<string> test1 = {"aya", "yee", "yeye", "woowoo", "ma"};
+    // vector<string> test2 = {"ayayeayayeaya", "mayewoo", "yemawoo"};
     // vector<vector<int> > test3 = {{2, 5, 3}, {4, 4, 1}, {1, 7, 3}};
     // vector<vector<int> > test4 = {{10, 7}, {12, 3}, {8, 15}, {14, 7}, {5, 15}};
 
     // solution(8,4,test1);
     // solution(5,4,test2);
 
-    cout << "test1 : " << solution(test1) << endl;
-    cout << "test2 : " << solution(test2) << endl;
+    // cout << "test1 : " << solution(test1) << endl;
+    // cout << "test2 : " << solution(test2) << endl;
 
     // vector<string> result1 = solution(5, test1, test2);
     // cout << "Test 1 : [";
