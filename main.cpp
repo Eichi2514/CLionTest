@@ -1,33 +1,26 @@
 #include <string>
-#include <vector>
 
 using namespace std;
 
-vector<int> solution(vector<int> lottos, vector<int> win_nums) {
-    vector<int> answer;
-    vector<int> lank = {6, 6, 5, 4, 3, 2, 1};
+int solution(string s) {
+    int answer = 0;
+    char x = s[0];
+    int a = 0;
+    int b = 0;
 
-    int zeroCount = 0;
-    for (int i = 0; i < lottos.size(); i++) {
-        if (lottos[i] == 0) {
-            zeroCount++;
+    for (int i = 0; i < s.length()-1; i++) {
+
+        if (s[i] == x) a++;
+        else b++;
+
+        if (a == b && a != 0) {
+            x = s[i+1];
+            a = 0;
+            b = 0;
+            answer++;
         }
     }
-
-    int lottoCount = 0;
-    for (int i = 0; i < lottos.size(); i++) {
-        for (int j = 0; j < win_nums.size(); j++) {
-            if (lottos[i] == win_nums[j]) {
-                lottoCount++;
-            }
-        }
-    }
-
-    zeroCount += lottoCount;
-
-    answer.push_back(lank[zeroCount]);
-    answer.push_back(lank[lottoCount]);
-
+    answer++;
     return answer;
 }
 
