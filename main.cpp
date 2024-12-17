@@ -1,24 +1,41 @@
 #include <string>
+#include <cmath>
 #include <vector>
 
 using namespace std;
 
-int solution(vector<int> wallet, vector<int> bill) {
-    int answer = 0;
-    int walletMax = (wallet[0] > wallet[1]) ? wallet[0] : wallet[1];
-    int walletMin = (wallet[0] > wallet[1]) ? wallet[1] : wallet[0];
-    int billMax = (bill[0] > bill[1]) ? bill[0] : bill[1];
-    int billMin = (bill[0] > bill[1]) ? bill[1] : bill[0];
+int tmp(char SDT) {
+    return (SDT == 'S' ? 1 : (SDT == 'D' ? 2 : 3));
+}
 
-    while ((walletMax < billMax || walletMin < billMin) &&
-       (walletMax < billMin || walletMin < billMax)) {
-        answer++;
-        billMax = billMax / 2;
-        if (billMax < billMin) {
-            int temp = billMax;
-            billMax = billMin;
-            billMin = temp;
+int solution(string d) {
+    vector<int> scores(3);
+    int idx = -1;
+
+    for (int i = 0; i < d.size(); i++) {
+        if (isdigit(d[i])) {
+            idx++;
+            if (d[i] == '1' && i + 1 < d.size() && d[i + 1] == '0') {
+                scores[idx] = 10;
+                i++;
+            } else {
+                scores[idx] = d[i] - '0';
+            }
+        } else if (d[i] == 'S' || d[i] == 'D' || d[i] == 'T') {
+            scores[idx] = pow(scores[idx], tmp(d[i]));
+        } else if (d[i] == '*') {
+            scores[idx] *= 2;
+            if (idx > 0) {
+                scores[idx - 1] *= 2;
+            }
+        } else if (d[i] == '#') {
+            scores[idx] *= -1;
         }
+    }
+
+    int answer = 0;
+    for (int score : scores) {
+        answer += score;
     }
 
     return answer;
