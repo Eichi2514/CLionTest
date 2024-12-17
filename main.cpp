@@ -2,25 +2,30 @@
 
 using namespace std;
 
-int solution(string s) {
-    int answer = 0;
-    char x = s[0];
-    int a = 0;
-    int b = 0;
+string solution(string s, string skip, int index) {
+    string answer = "";
 
-    for (int i = 0; i < s.length()-1; i++) {
-
-        if (s[i] == x) a++;
-        else b++;
-
-        if (a == b && a != 0) {
-            x = s[i+1];
-            a = 0;
-            b = 0;
-            answer++;
+    for (int i = 0; i < s.length(); i++) {
+        char S = s[i];
+        for (int j = 0; j < index; j++) {
+            S++;
+            if (S > 'z') {
+                S = 'a';
+            }
+            bool temp = false;
+            for (int k = 0; k < skip.length(); k++) {
+                if (S == skip[k]) {
+                    temp = true;
+                    break;
+                }
+            }
+            if (temp) {
+                j--;
+            }
         }
+        answer += S;
     }
-    answer++;
+
     return answer;
 }
 
