@@ -1,42 +1,24 @@
+#include <string>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
-vector<int> solution(int N, vector<int> stages) {
-    vector<int> answer;
+int solution(vector<int> wallet, vector<int> bill) {
+    int answer = 0;
+    int walletMax = (wallet[0] > wallet[1]) ? wallet[0] : wallet[1];
+    int walletMin = (wallet[0] > wallet[1]) ? wallet[1] : wallet[0];
+    int billMax = (bill[0] > bill[1]) ? bill[0] : bill[1];
+    int billMin = (bill[0] > bill[1]) ? bill[1] : bill[0];
 
-     vector<int> stageCount(N + 1, 0);
-
-     for (int i = 0; i < stages.size(); i++) {
-        if (stages[i] <= N) {
-            stageCount[stages[i]]++;
+    while ((walletMax < billMax || walletMin < billMin) &&
+       (walletMax < billMin || walletMin < billMax)) {
+        answer++;
+        billMax = billMax / 2;
+        if (billMax < billMin) {
+            int temp = billMax;
+            billMax = billMin;
+            billMin = temp;
         }
-    }
-
-    vector<pair<int, double>> failureRates;
-    int totalPlayers = stages.size();
-
-     for (int i = 1; i <= N; i++) {
-        if (totalPlayers == 0) {
-            failureRates.push_back({i, 0.0});
-        } else {
-            double failureRate = (double)stageCount[i] / totalPlayers;
-            failureRates.push_back({i, failureRate});
-            totalPlayers -= stageCount[i];
-        }
-    }
-
-     sort(failureRates.begin(), failureRates.end(),
-        [](pair<int, double> a, pair<int, double> b) {
-            if (a.second == b.second) {
-                return a.first < b.first;
-            }
-            return a.second > b.second;
-        });
-
-     for (int i = 0; i < failureRates.size(); i++) {
-        answer.push_back(failureRates[i].first);
     }
 
     return answer;
