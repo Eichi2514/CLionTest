@@ -1,42 +1,32 @@
 #include <string>
-#include <cmath>
 #include <vector>
 
 using namespace std;
 
-int tmp(char SDT) {
-    return (SDT == 'S' ? 1 : (SDT == 'D' ? 2 : 3));
-}
+vector<int> solution(vector<int> lottos, vector<int> win_nums) {
+    vector<int> answer;
+    vector<int> lank = {6, 6, 5, 4, 3, 2, 1};
 
-int solution(string d) {
-    vector<int> scores(3);
-    int idx = -1;
-
-    for (int i = 0; i < d.size(); i++) {
-        if (isdigit(d[i])) {
-            idx++;
-            if (d[i] == '1' && i + 1 < d.size() && d[i + 1] == '0') {
-                scores[idx] = 10;
-                i++;
-            } else {
-                scores[idx] = d[i] - '0';
-            }
-        } else if (d[i] == 'S' || d[i] == 'D' || d[i] == 'T') {
-            scores[idx] = pow(scores[idx], tmp(d[i]));
-        } else if (d[i] == '*') {
-            scores[idx] *= 2;
-            if (idx > 0) {
-                scores[idx - 1] *= 2;
-            }
-        } else if (d[i] == '#') {
-            scores[idx] *= -1;
+    int zeroCount = 0;
+    for (int i = 0; i < lottos.size(); i++) {
+        if (lottos[i] == 0) {
+            zeroCount++;
         }
     }
 
-    int answer = 0;
-    for (int score : scores) {
-        answer += score;
+    int lottoCount = 0;
+    for (int i = 0; i < lottos.size(); i++) {
+        for (int j = 0; j < win_nums.size(); j++) {
+            if (lottos[i] == win_nums[j]) {
+                lottoCount++;
+            }
+        }
     }
+
+    zeroCount += lottoCount;
+
+    answer.push_back(lank[zeroCount]);
+    answer.push_back(lank[lottoCount]);
 
     return answer;
 }
