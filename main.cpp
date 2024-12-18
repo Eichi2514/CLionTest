@@ -1,31 +1,37 @@
+#include <vector>
 #include <string>
-
+#include <unordered_map>
 using namespace std;
 
-string solution(string s, string skip, int index) {
-    string answer = "";
+vector<int> solution(vector<string> keymap, vector<string> targets) {
+    unordered_map<char, int> minPress;
+    vector<int> answer;
 
-    for (int i = 0; i < s.length(); i++) {
-        char S = s[i];
-        for (int j = 0; j < index; j++) {
-            S++;
-            if (S > 'z') {
-                S = 'a';
-            }
-            bool temp = false;
-            for (int k = 0; k < skip.length(); k++) {
-                if (S == skip[k]) {
-                    temp = true;
-                    break;
+    for (int i = 0; i < keymap.size(); ++i) {
+        for (int j = 0; j < keymap[i].size(); ++j) {
+            char c = keymap[i][j];
+            if (minPress.find(c) == minPress.end()) {
+                minPress[c] = j + 1;
+            } else {
+                if (j + 1 < minPress[c]) {
+                    minPress[c] = j + 1;
                 }
             }
-            if (temp) {
-                j--;
-            }
         }
-        answer += S;
     }
 
+    for (const string& target : targets) {
+        int totalPress = 0;
+        bool possible = true;
+        for (char c : target) {
+            if (minPress.find(c) == minPress.end()) {
+                possible = false;
+                break;
+            }
+            totalPress += minPress[c];
+        }
+        answer.push_back(possible ? totalPress : -1);
+    }
     return answer;
 }
 
