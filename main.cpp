@@ -1,36 +1,38 @@
 #include <algorithm>
-#include <vector>
+#include <string>
+#include <unordered_map>
 
 using namespace std;
 
-int solution(int n, vector<int> lost, vector<int> reserve) {
-    sort(reserve.begin(), reserve.end());
-    sort(lost.begin(), lost.end());
+string solution(string X, string Y) {
+    string answer = "";
+    unordered_map<char, int> countX, countY;
 
-    for (int i = 0; i < lost.size(); i++) {
-        for (int j = 0; j < reserve.size(); j++) {
-            if (lost[i] == reserve[j]) {
-                lost.erase(lost.begin() + i);
-                reserve.erase(reserve.begin() + j);
-                i--;
-                break;
-            }
+    for (char c : X) {
+        countX[c]++;
+    }
+    for (char c : Y) {
+        countY[c]++;
+    }
+
+    for (char c = '9'; c >= '0'; c--) {
+        int commonCount = min(countX[c], countY[c]);
+        for (int i = 0; i < commonCount; i++) {
+            answer += c;
         }
     }
 
-    int answer = n - lost.size();
-
-    for (int i = 0; i < lost.size(); i++) {
-        for (int j = 0; j < reserve.size(); j++) {
-            if (lost[i] - 1 == reserve[j] || lost[i] + 1 == reserve[j]) {
-                answer++;
-                reserve.erase(reserve.begin() + j);
-                break;
-            }
-        }
+    if (answer.empty()) {
+        answer = "-1";
     }
+
+    if (answer[0] == '0') {
+        answer = "0";
+    }
+
     return answer;
 }
+
 
 #include <iostream>
 
