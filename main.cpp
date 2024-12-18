@@ -1,25 +1,36 @@
-#include <string>
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
-string solution(vector<string> participant, vector<string> completion) {
-    string answer;
-    sort(participant.begin(), participant.end());
-    sort(completion.begin(), completion.end());
+int solution(int n, vector<int> lost, vector<int> reserve) {
+    sort(reserve.begin(), reserve.end());
+    sort(lost.begin(), lost.end());
 
-    for (int i = 0; i < completion.size(); i++) {
-        if (participant[i] != completion[i]) {
-            answer = participant[i];
-            break;
+    for (int i = 0; i < lost.size(); i++) {
+        for (int j = 0; j < reserve.size(); j++) {
+            if (lost[i] == reserve[j]) {
+                lost.erase(lost.begin() + i);
+                reserve.erase(reserve.begin() + j);
+                i--;
+                break;
+            }
         }
     }
 
-    if (answer.empty()) answer = participant.back();
+    int answer = n - lost.size();
+
+    for (int i = 0; i < lost.size(); i++) {
+        for (int j = 0; j < reserve.size(); j++) {
+            if (lost[i] - 1 == reserve[j] || lost[i] + 1 == reserve[j]) {
+                answer++;
+                reserve.erase(reserve.begin() + j);
+                break;
+            }
+        }
+    }
     return answer;
 }
-
 
 #include <iostream>
 
