@@ -1,37 +1,16 @@
-#include <vector>
 #include <string>
-#include <unordered_map>
+#include <vector>
+
 using namespace std;
 
-vector<int> solution(vector<string> keymap, vector<string> targets) {
-    unordered_map<char, int> minPress;
-    vector<int> answer;
+int solution(vector<vector<string>> board, int h, int w) {
+    int answer = 0;
 
-    for (int i = 0; i < keymap.size(); ++i) {
-        for (int j = 0; j < keymap[i].size(); ++j) {
-            char c = keymap[i][j];
-            if (minPress.find(c) == minPress.end()) {
-                minPress[c] = j + 1;
-            } else {
-                if (j + 1 < minPress[c]) {
-                    minPress[c] = j + 1;
-                }
-            }
-        }
-    }
+    if (h > 0 && board[h][w] == board[h-1][w]) answer++;
+    if (h < board.size() - 1 && board[h][w] == board[h+1][w]) answer++;
+    if (w > 0 && board[h][w] == board[h][w-1]) answer++;
+    if (w < board[0].size() - 1 && board[h][w] == board[h][w+1]) answer++;
 
-    for (const string& target : targets) {
-        int totalPress = 0;
-        bool possible = true;
-        for (char c : target) {
-            if (minPress.find(c) == minPress.end()) {
-                possible = false;
-                break;
-            }
-            totalPress += minPress[c];
-        }
-        answer.push_back(possible ? totalPress : -1);
-    }
     return answer;
 }
 
