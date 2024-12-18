@@ -1,18 +1,25 @@
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-int solution(vector<vector<string>> board, int h, int w) {
-    int answer = 0;
+string solution(vector<string> participant, vector<string> completion) {
+    string answer;
+    sort(participant.begin(), participant.end());
+    sort(completion.begin(), completion.end());
 
-    if (h > 0 && board[h][w] == board[h-1][w]) answer++;
-    if (h < board.size() - 1 && board[h][w] == board[h+1][w]) answer++;
-    if (w > 0 && board[h][w] == board[h][w-1]) answer++;
-    if (w < board[0].size() - 1 && board[h][w] == board[h][w+1]) answer++;
+    for (int i = 0; i < completion.size(); i++) {
+        if (participant[i] != completion[i]) {
+            answer = participant[i];
+            break;
+        }
+    }
 
+    if (answer.empty()) answer = participant.back();
     return answer;
 }
+
 
 #include <iostream>
 
