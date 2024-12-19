@@ -2,31 +2,26 @@
 
 using namespace std;
 
-int solution(vector<int> ingredient) {
+int solution(vector<vector<int> > board, vector<int> moves) {
     int answer = 0;
-    vector<int> stack;
-
-    for (int i = 0; i < ingredient.size(); i++) {
-        stack.push_back(ingredient[i]);
-
-        if (stack.size() >= 4 &&
-            stack[stack.size() - 4] == 1 &&
-            stack[stack.size() - 3] == 2 &&
-            stack[stack.size() - 2] == 3 &&
-            stack[stack.size() - 1] == 1) {
-            stack.pop_back();
-            stack.pop_back();
-            stack.pop_back();
-            stack.pop_back();
-            answer++;
+    vector<int> item;
+    for (int i = 0; i < moves.size(); i++) {
+        for (int j = 0; j < board.size(); j++) {
+            if (board[j][moves[i] - 1] != 0) {
+                item.push_back(board[j][moves[i] - 1]);
+                board[j][moves[i] - 1] = 0;
+                break;
             }
-    }
+        }
 
+        if (item.size() >= 2 && item[item.size() - 1] == item[item.size() - 2]) {
+            answer += 2;
+            item.pop_back();
+            item.pop_back();
+        }
+    }
     return answer;
 }
-
-
-
 
 #include <iostream>
 
