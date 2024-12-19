@@ -1,19 +1,30 @@
+#include <vector>
+
 using namespace std;
 
-int solution(int n) {
+int solution(vector<int> ingredient) {
     int answer = 0;
-    for (int i = 2; i <= n; i++) {
-        bool isPrime = true;
-        for (int j = 2; j * j <= i; j++) {
-            if (i % j == 0) {
-                isPrime = false;
-                break;
+    vector<int> stack;
+
+    for (int i = 0; i < ingredient.size(); i++) {
+        stack.push_back(ingredient[i]);
+
+        if (stack.size() >= 4 &&
+            stack[stack.size() - 4] == 1 &&
+            stack[stack.size() - 3] == 2 &&
+            stack[stack.size() - 2] == 3 &&
+            stack[stack.size() - 1] == 1) {
+            stack.pop_back();
+            stack.pop_back();
+            stack.pop_back();
+            stack.pop_back();
+            answer++;
             }
-        }
-        if (isPrime) answer++;
     }
+
     return answer;
 }
+
 
 
 
