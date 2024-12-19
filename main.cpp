@@ -1,37 +1,20 @@
-#include <algorithm>
-#include <string>
-#include <unordered_map>
-
 using namespace std;
 
-string solution(string X, string Y) {
-    string answer = "";
-    unordered_map<char, int> countX, countY;
-
-    for (char c : X) {
-        countX[c]++;
-    }
-    for (char c : Y) {
-        countY[c]++;
-    }
-
-    for (char c = '9'; c >= '0'; c--) {
-        int commonCount = min(countX[c], countY[c]);
-        for (int i = 0; i < commonCount; i++) {
-            answer += c;
+int solution(int n) {
+    int answer = 0;
+    for (int i = 2; i <= n; i++) {
+        bool isPrime = true;
+        for (int j = 2; j * j <= i; j++) {
+            if (i % j == 0) {
+                isPrime = false;
+                break;
+            }
         }
+        if (isPrime) answer++;
     }
-
-    if (answer.empty()) {
-        answer = "-1";
-    }
-
-    if (answer[0] == '0') {
-        answer = "0";
-    }
-
     return answer;
 }
+
 
 
 #include <iostream>
