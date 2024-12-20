@@ -1,37 +1,65 @@
 #include <string>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
-vector<vector<int>> solution(vector<vector<int>> data, string ext, int val_ext, string sort_by) {
-    vector<vector<int>> answer;
+string solution(vector<int> numbers, string hand) {
+    string answer = "";
+    vector<vector<int>> temp = {
+        {1, 2, 3},
+        {4, 5, 6},
+        {7, 8, 9},
+        {-1, 0, -2}
+    };
 
-    int n;
-    int m;
+    pair<int, int> L = {3, 0};
+    pair<int, int> R = {3, 2};
 
-    if (ext == "code") n = 0;
-    else if (ext == "date") n = 1;
-    else if (ext == "maximum") n = 2;
-    else if (ext == "remain") n = 3;
+    for (int i = 0; i < numbers.size(); i++) {
+        int target = numbers[i];
+        pair<int, int> pos;
 
-    if (sort_by == "code") m = 0;
-    else if (sort_by == "date") m = 1;
-    else if (sort_by == "maximum") m = 2;
-    else if (sort_by == "remain") m = 3;
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 3; y++) {
+                if (temp[x][y] == target) {
+                    pos = {x, y};
+                }
+            }
+        }
 
-    for (int i = 0; i < data.size(); i++) {
-        if (data[i][n] < val_ext) {
-            answer.push_back(data[i]);
+        if (target == 1 || target == 4 || target == 7) {
+            answer += "L";
+            L = pos;
+        }
+        else if (target == 3 || target == 6 || target == 9) {
+            answer += "R";
+            R = pos;
+        }
+        else {
+            int leftDistance = (L.first > pos.first ? L.first - pos.first : pos.first - L.first) + (L.second > pos.second ? L.second - pos.second : pos.second - L.second);
+            int rightDistance = (R.first > pos.first ? R.first - pos.first : pos.first - R.first) + (R.second > pos.second ? R.second - pos.second : pos.second - R.second);
+
+            if (leftDistance < rightDistance) {
+                answer += "L";
+                L = pos;
+            } else if (rightDistance < leftDistance) {
+                answer += "R";
+                R = pos;
+            } else {
+                if (hand == "left") {
+                    answer += "L";
+                    L = pos;
+                } else {
+                    answer += "R";
+                    R = pos;
+                }
+            }
         }
     }
 
-    sort(answer.begin(), answer.end(), [m](vector<int> a, vector<int> b) {
-        return a[m] < b[m];
-    });
-
     return answer;
 }
+
 
 #include <iostream>
 
