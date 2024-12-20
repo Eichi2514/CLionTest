@@ -1,65 +1,37 @@
+#include <map>
 #include <string>
 #include <vector>
 
 using namespace std;
 
-string solution(vector<int> numbers, string hand) {
+string solution(vector<string> survey, vector<int> choices) {
     string answer = "";
-    vector<vector<int>> temp = {
-        {1, 2, 3},
-        {4, 5, 6},
-        {7, 8, 9},
-        {-1, 0, -2}
-    };
+    map<char, int> scores;
 
-    pair<int, int> L = {3, 0};
-    pair<int, int> R = {3, 2};
+    for (int i = 0; i < choices.size(); i++) {
+        if (choices[i] == 4) continue;
+        char type1 = survey[i][0];
+        char type2 = survey[i][1];
+        int score = choices[i] - 4;
 
-    for (int i = 0; i < numbers.size(); i++) {
-        int target = numbers[i];
-        pair<int, int> pos;
-
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 3; y++) {
-                if (temp[x][y] == target) {
-                    pos = {x, y};
-                }
-            }
+        if (score < 0) {
+            scores[type1] -= score;
+        } else {
+            scores[type2] += score;
         }
+    }
 
-        if (target == 1 || target == 4 || target == 7) {
-            answer += "L";
-            L = pos;
-        }
-        else if (target == 3 || target == 6 || target == 9) {
-            answer += "R";
-            R = pos;
-        }
-        else {
-            int leftDistance = (L.first > pos.first ? L.first - pos.first : pos.first - L.first) + (L.second > pos.second ? L.second - pos.second : pos.second - L.second);
-            int rightDistance = (R.first > pos.first ? R.first - pos.first : pos.first - R.first) + (R.second > pos.second ? R.second - pos.second : pos.second - R.second);
-
-            if (leftDistance < rightDistance) {
-                answer += "L";
-                L = pos;
-            } else if (rightDistance < leftDistance) {
-                answer += "R";
-                R = pos;
-            } else {
-                if (hand == "left") {
-                    answer += "L";
-                    L = pos;
-                } else {
-                    answer += "R";
-                    R = pos;
-                }
-            }
+    string types = "RTCFJMAN";
+    for (int i = 0; i < types.size(); i += 2) {
+        if (scores[types[i]] >= scores[types[i+1]]) {
+            answer += types[i];
+        } else {
+            answer += types[i+1];
         }
     }
 
     return answer;
 }
-
 
 #include <iostream>
 
