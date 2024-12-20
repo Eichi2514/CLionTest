@@ -1,25 +1,35 @@
+#include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-int solution(vector<vector<int> > board, vector<int> moves) {
-    int answer = 0;
-    vector<int> item;
-    for (int i = 0; i < moves.size(); i++) {
-        for (int j = 0; j < board.size(); j++) {
-            if (board[j][moves[i] - 1] != 0) {
-                item.push_back(board[j][moves[i] - 1]);
-                board[j][moves[i] - 1] = 0;
-                break;
-            }
-        }
+vector<vector<int>> solution(vector<vector<int>> data, string ext, int val_ext, string sort_by) {
+    vector<vector<int>> answer;
 
-        if (item.size() >= 2 && item[item.size() - 1] == item[item.size() - 2]) {
-            answer += 2;
-            item.pop_back();
-            item.pop_back();
+    int n;
+    int m;
+
+    if (ext == "code") n = 0;
+    else if (ext == "date") n = 1;
+    else if (ext == "maximum") n = 2;
+    else if (ext == "remain") n = 3;
+
+    if (sort_by == "code") m = 0;
+    else if (sort_by == "date") m = 1;
+    else if (sort_by == "maximum") m = 2;
+    else if (sort_by == "remain") m = 3;
+
+    for (int i = 0; i < data.size(); i++) {
+        if (data[i][n] < val_ext) {
+            answer.push_back(data[i]);
         }
     }
+
+    sort(answer.begin(), answer.end(), [m](vector<int> a, vector<int> b) {
+        return a[m] < b[m];
+    });
+
     return answer;
 }
 
