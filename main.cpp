@@ -1,18 +1,30 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int main() {
-    int num;
 
-    cin >> num;
+    int a, b;
+    cin >> a >> b;
 
-    for (int i = 1; i <= num; i++) {
-        if (i * i > num) {
-            int k = num - ((i - 1) * (i - 1));
-            int t = i - 1;
-            cout << k << ' ' << t;
-            break;
-        }
+    double c = a;
+
+    for (int i = 0; i < b; i++) {
+        int change;
+        cin >> change;
+        c *= (1 + change / 100.0);
+    }
+
+    double tmp = round(c - a);
+
+    cout << tmp << endl;
+
+    if (tmp > 0.5) {
+        cout << "good" << endl;
+    } else if (tmp < -0.5) {
+        cout << "bad" << endl;
+    } else {
+        cout << "same" << endl;
     }
 
     return 0;
