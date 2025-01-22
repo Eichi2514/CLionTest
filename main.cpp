@@ -2,24 +2,18 @@
 using namespace std;
 
 int main() {
-    int a, b;
-    int num = 0;
+    int num;
 
-    cin >> a >> b;  // 한 줄에 두 개의 정수 입력
+    cin >> num;
 
-    for (int i = a; i <= b; i++) {
-        if (i % 2 == 0) {
-            cout << '-'<< i;
-            num -= i;
-        }
-        else {
-            if (i != a) cout << '+';
-            cout << i;
-            num += i;
+    for (int i = 1; i <= num; i++) {
+        if (i * i > num) {
+            int k = num - ((i - 1) * (i - 1));
+            int t = i - 1;
+            cout << k << ' ' << t;
+            break;
         }
     }
-
-    cout << '=' << num;
 
     return 0;
 }
