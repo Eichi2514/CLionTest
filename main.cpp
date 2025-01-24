@@ -2,30 +2,28 @@
 #include <cmath>
 using namespace std;
 
+bool isPrime(int num) {
+    for (int i = 2; i <= sqrt(num); i++) {
+        if (num % i == 0) return false;
+    }
+    return true;
+}
+
 int main() {
+    int n;
+    cin >> n;
 
-    int a, b;
-    cin >> a >> b;
-
-    double c = a;
-
-    for (int i = 0; i < b; i++) {
-        int change;
-        cin >> change;
-        c *= (1 + change / 100.0);
+    for (int i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0) {
+            int a = i;
+            int b = n / i;
+            if (isPrime(a) && isPrime(b)) {
+                cout << a << " " << b;
+                return 0;
+            }
+        }
     }
 
-    double tmp = round(c - a);
-
-    cout << tmp << endl;
-
-    if (tmp > 0.5) {
-        cout << "good" << endl;
-    } else if (tmp < -0.5) {
-        cout << "bad" << endl;
-    } else {
-        cout << "same" << endl;
-    }
-
+    cout << "wrong number";
     return 0;
 }
