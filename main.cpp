@@ -2,22 +2,13 @@
 using namespace std;
 
 int main() {
-    int max, min;
-    cin >> max;
-    min = max;
+    int n;
+    cin >> n;
 
-    for (int i = 0; i < 4; i++) {
-        int tmp;
-        cin >> tmp;
-        if (tmp < min) {
-            min = tmp;
-        }
-        if (tmp > max) {
-            max = tmp;
-        }
+    for (int i = 1; i <= 9; i++) {
+        for (int j = 0; j < i*n; j++) cout << '*';
+        cout << endl;
     }
 
-    cout << max << endl;
-    cout << min << endl;
     return 0;
 }
