@@ -1,14 +1,20 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-    int n;
-    cin >> n;
-
-    for (int i = 1; i <= 9; i++) {
-        for (int j = 0; j < i*n; j++) cout << '*';
-        cout << endl;
+int sub (int n) {
+    int sum = 1;
+    if (n == 0) return sum;
+    for (int i = 2; i <= n; i++) {
+        sum *= i;
     }
+    return sum;
+}
+
+int main() {
+    int n, r;
+    cin >> n >> r;
+
+    cout << sub(n) / (sub(r) * sub(n-r)) << endl;
 
     return 0;
 }
