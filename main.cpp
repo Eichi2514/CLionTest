@@ -2,18 +2,15 @@
 using namespace std;
 
 int main() {
-    int n = 0;
-    cin >> n;
+    int n, m, l;
+    cin >> n >> m >> l;
 
-    int count = 0;
-
-    for (int i = 1; i <= n / 2; i++) {
-        if (n % i == 0 ) {
-            count++;
+    for (int i = l; i >= 1; i--) {
+        if (n % i == 0 && m % i == 0 && l % i == 0 ) {
+            cout << i << endl;
+            return 1;
         }
     }
-
-    cout << count << endl;
 
     return 0;
 }
