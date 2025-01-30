@@ -2,15 +2,16 @@
 using namespace std;
 
 int main() {
-    int n, m, l;
-    cin >> n >> m >> l;
+    long long DNA;
+    int sum = 0;
+    cin >> DNA;
 
-    for (int i = l; i >= 1; i--) {
-        if (n % i == 0 && m % i == 0 && l % i == 0 ) {
-            cout << i << endl;
-            return 1;
-        }
+    while (DNA > 0) {
+        sum += DNA % 10;
+        DNA /= 10;
     }
+
+    cout << (sum % 7 == 4 ? "suspect" : "citizen");
 
     return 0;
 }
