@@ -2,16 +2,18 @@
 using namespace std;
 
 int main() {
-    int max = 0;
+    int n = 0;
+    cin >> n;
 
-    for (int i = 0; i < 3; i++) {
-        int x, y;
-        cin >> x >> y;
+    int count = 0;
 
-        max = max < x * y ? x * y : max;
+    for (int i = 1; i <= n / 2; i++) {
+        if (n % i == 0 ) {
+            count++;
+        }
     }
 
-    cout << max << endl;
+    cout << count << endl;
 
     return 0;
 }
