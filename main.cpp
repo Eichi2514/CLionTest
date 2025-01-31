@@ -2,16 +2,17 @@
 using namespace std;
 
 int main() {
-    long long DNA;
-    int sum = 0;
-    cin >> DNA;
+    int n, max = 0, min = 100;
+    cin >> n;
 
-    while (DNA > 0) {
-        sum += DNA % 10;
-        DNA /= 10;
+    for (int i = 0; i < n; i++) {
+        int num;
+        cin >> num;
+        if (num < min) min = num;
+        if (num > max) max = num;
     }
 
-    cout << (sum % 7 == 4 ? "suspect" : "citizen");
+    cout << max << " " << min << endl;
 
     return 0;
 }
