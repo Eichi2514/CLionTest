@@ -1,18 +1,18 @@
 #include <iostream>
+#include <string>
+
 using namespace std;
 
 int main() {
-    int n, max = 0, min = 100;
-    cin >> n;
+    string answer;
+    getline(cin, answer);
 
-    for (int i = 0; i < n; i++) {
-        int num;
-        cin >> num;
-        if (num < min) min = num;
-        if (num > max) max = num;
+    for (char &ch : answer) {
+        if (ch >= 'a' && ch <= 'z') {
+            ch = (ch - 'a' + 3) % 26 + 'a';
+        }
     }
 
-    cout << max << " " << min << endl;
-
+    cout << answer << endl;
     return 0;
 }
