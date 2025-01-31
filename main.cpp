@@ -1,21 +1,13 @@
 #include <iostream>
-#include <cctype>
 
 using namespace std;
 
 int main() {
-    string answer;
-    cin >> answer;
+    int n;
+    cin >> n;
+    double m = n / 4.0;
+    n = m * m;
 
-    for (char &ch : answer) {
-        if (isupper(ch)) {
-            ch = tolower(ch);
-        } else if (islower(ch)) {
-            ch = toupper(ch);
-        }
-    }
-
-    cout << answer << endl;
-
+    cout << n << endl;
     return 0;
 }
