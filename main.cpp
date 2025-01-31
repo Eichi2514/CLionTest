@@ -1,18 +1,21 @@
 #include <iostream>
-#include <string>
+#include <cctype>
 
 using namespace std;
 
 int main() {
     string answer;
-    getline(cin, answer);
+    cin >> answer;
 
     for (char &ch : answer) {
-        if (ch >= 'a' && ch <= 'z') {
-            ch = (ch - 'a' + 3) % 26 + 'a';
+        if (isupper(ch)) {
+            ch = tolower(ch);
+        } else if (islower(ch)) {
+            ch = toupper(ch);
         }
     }
 
     cout << answer << endl;
+
     return 0;
 }
