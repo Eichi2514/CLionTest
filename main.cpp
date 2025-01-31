@@ -1,13 +1,19 @@
 #include <iostream>
-
 using namespace std;
 
 int main() {
-    int n;
+    int n, m = 0, l = 0;
     cin >> n;
-    double m = n / 4.0;
-    n = m * m;
 
-    cout << n << endl;
+    for (int i = n / 2; i > 0; i--) {
+        if (i * (n - 2 * i) > l) {
+            l = i * (n - 2 * i);
+            m = i;
+        } else if (i * (n - 2 * i) == l && i < m) {
+            m = i;
+        }
+    }
+
+    cout << m << endl;
     return 0;
 }
