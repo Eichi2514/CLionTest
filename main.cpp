@@ -2,18 +2,13 @@
 using namespace std;
 
 int main() {
-    int n, l = 0, m = 1;
+    int n;
     cin >> n;
 
-    for (int i = (n / 2) + 1; i <= n; i++) {
-        for (int j = 1; j <= n / 2 - l; j++) {
-            cout << " ";
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= i; j++) {
+            cout << j << ' ';
         }
-        for (int k = 1; k <= m; k++) {
-            cout << "*";
-        }
-        l++;
-        m += 2;
         cout << endl;
     }
 
